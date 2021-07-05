@@ -14,4 +14,4 @@ module.exports.Customer = Customer;
 module.exports.Vehicle = Vehicle;
 module.exports.Insurance = Insurance;
 
-module.exports.contracts = [ Customer, Vehicle, Insurance ];
+module.exports.contracts = [Customer, Vehicle, Insurance];
