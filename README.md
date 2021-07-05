@@ -2,7 +2,7 @@
 
 # State Diagram
 
-![insurance](https://user-images.githubusercontent.com/39497510/124503658-a1fd9f80-dde3-11eb-938c-b792b963b187.PNG)
+![insurance](https://user-images.githubusercontent.com/39497510/124521182-4693d780-de0c-11eb-96e5-54bd5d257dd5.PNG)
 
 # Roles
 
