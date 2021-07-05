@@ -18,29 +18,29 @@ class Vehicle extends Contract {
                 make: 'Toyota',
                 model: 'Prius',
                 year: '2020',
-                license_plate_num: 'KUOGN85R3B012814'
+                plate_number: 'KUOGN85R3B012814'
             }, {
                 customer_id: '17653662',
                 make: 'Hyundai',
                 model: 'Elentra',
                 year: '2020',
-                license_plate_num: 'KUOGN82R3J012909'
+                plate_number: 'KUOGN82R3J012909'
             }
         ];
 
         for (let i = 0; i < registered_vehicles.length; i++) {
-            await ctx.stub.putState(registered_vehicles[i].license_plate_num, Buffer.from(JSON.stringify(registered_vehicles[i])));
+            await ctx.stub.putState(registered_vehicles[i].plate_number, Buffer.from(JSON.stringify(registered_vehicles[i])));
             console.info('Added <--> ', registered_vehicles[i]);
         }
 
         console.info('============= END : Initialize Vehicle Ledger ===========');
     }
-    async addVehicleInfo(ctx, customer_id, make, model, year, license_plate_num) {
+    async addVehicleInfo(ctx, customer_id, make, model, year, plate_number) {
         console.info('============= START : Create ledger for Storing Vehicle Information ===========');
 
-        const vehicleDetails = await ctx.stub.getState(license_plate_num);
+        const vehicleDetails = await ctx.stub.getState(plate_number);
         if (!!vehicleDetails) {
-            throw new Error(`${license_plate_num} already exists!`);
+            throw new Error(`${plate_number} already exists!`);
         }
 
         const vehicle = {
@@ -48,17 +48,17 @@ class Vehicle extends Contract {
             make,
             model,
             year,
-            license_plate_num
+            plate_number
         };
 
-        await ctx.stub.putState(license_plate_num, Buffer.from(JSON.stringify(vehicle)));
+        await ctx.stub.putState(plate_number, Buffer.from(JSON.stringify(vehicle)));
         console.info('============= END : Create ledger for Storing Vehicle Information ===========');
     }
 
-    async getVehicleInfo(ctx, license_plate_num) {
-        const vehicleDetails = await ctx.stub.getState(license_plate_num);
+    async getVehicleInfo(ctx, plate_number) {
+        const vehicleDetails = await ctx.stub.getState(plate_number);
         if (!vehicleDetails || vehicleDetails.length === 0) {
-            throw new Error(`${license_plate_num} does not exist`);
+            throw new Error(`${plate_number} does not exist`);
         }
         console.log(vehicleDetails.toString());
         return vehicleDetails.toString();
