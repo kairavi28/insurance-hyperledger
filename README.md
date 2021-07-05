@@ -1,3 +1,14 @@
-# insurance-hyperledger
+# insurance-hyperledger 
+# State Diagram
 
-![insurance1](https://user-images.githubusercontent.com/39497510/124403048-b85b1b00-dd51-11eb-8c12-3745217b468d.PNG)
+![insurance](https://user-images.githubusercontent.com/39497510/124503658-a1fd9f80-dde3-11eb-938c-b792b963b187.PNG)
+
+# Roles
+
+1. User
+2. Claim Adjuster
+3. Insurance Company
+4. Complaint officer
+
+https://www.fsrao.ca/consumers/auto-insurance/after-accident-understanding-claims-process
+
