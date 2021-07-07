@@ -6,7 +6,12 @@
 
 'use strict';
 
+const Customer = require('./lib/customer');
+const Vehicle = require('./lib/vehicle');
 const Insurance = require('./lib/insurance');
 
+module.exports.Customer = Customer;
+module.exports.Vehicle = Vehicle;
 module.exports.Insurance = Insurance;
-module.exports.contracts = [ Insurance ];
+
+module.exports.contracts = [Customer, Vehicle, Insurance];

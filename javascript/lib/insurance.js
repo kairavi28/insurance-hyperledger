@@ -18,6 +18,7 @@ class Insurance extends Contract {
         const customerDetails = await ctx.stub.getState(customer_id);
         if (!!customerDetails) {
             throw new Error(`No Customer with ID: ${license_plate_num} exists!`);
+<<<<<<< HEAD
         }
 
 
@@ -27,6 +28,17 @@ class Insurance extends Contract {
         }
 
 
+=======
+        }
+
+
+        const vehicleDetails = await ctx.stub.getState(plate_number);
+        if (!!vehicleDetails) {
+            throw new Error(`No Vehicle with ID: ${license_plate_num} exists!`);
+        }
+
+
+>>>>>>> 2c3e0f82ed88f20a2469d776d6674a4f8a0ca23c
         const InsuranceDetails = await ctx.stub.getState(policy_number);
         if (!!InsuranceDetails) {
             throw new Error(`Insurance with Plicy Number: ${license_plate_num} already exists!`);
@@ -53,7 +65,11 @@ class Insurance extends Contract {
         console.log(InsuranceDetails.toString());
         return InsuranceDetails.toString();
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 2c3e0f82ed88f20a2469d776d6674a4f8a0ca23c
     async queryAllInsurances(ctx) {
         const startKey = '';
         const endKey = '';
@@ -75,4 +91,8 @@ class Insurance extends Contract {
 
 }
 
+<<<<<<< HEAD
 module.exports = Insurance;
+=======
+module.exports = Insurance;
+>>>>>>> 2c3e0f82ed88f20a2469d776d6674a4f8a0ca23c

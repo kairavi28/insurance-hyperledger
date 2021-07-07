@@ -1,7 +1,7 @@
 {
-    "name": "insurance",
+    "name": "First Trial",
     "version": "1.0.0",
-    "description": "insurance contract implemented in JavaScript",
+    "description": "Multiple contract implemented in JavaScript",
     "main": "index.js",
     "engines": {
         "node": ">=12",

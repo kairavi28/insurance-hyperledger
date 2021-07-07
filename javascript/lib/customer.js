@@ -27,7 +27,6 @@ class Customer extends Contract {
         ];
 
         for (let i = 0; i < customer_info.length; i++) {
-            customer_info[i].docType = 'customer_details';
             await ctx.stub.putState('CUSTOMER' + i, Buffer.from(JSON.stringify(customer_info[i])));
             console.info('Added <--> ', customer_info[i]);
         }
@@ -39,7 +38,6 @@ class Customer extends Contract {
 
         const cust = {
             customer_id,
-            docType: 'customer_details',
             first_name,
             last_name,
             registration_date
@@ -58,7 +56,7 @@ class Customer extends Contract {
         return custDetails.toString();
     }
     
-    async queryAllReports(ctx) {
+    async queryAllCustomers(ctx) {
         const startKey = '';
         const endKey = '';
         const allResults = [];
