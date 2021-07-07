@@ -13,24 +13,6 @@ class Insurance extends Contract {
     async addInsuranceInfo(ctx, policy_number, customer_id, plate_number, type, coverage, company_name) {
         console.info('============= START : Create ledger for Storing Insurance Information ===========');
 
-
-        const customerDetails = await ctx.stub.getState(customer_id);
-        if (!!customerDetails) {
-            throw new Error(`No Customer with ID: ${license_plate_num} exists!`);
-        }
-
-
-        const vehicleDetails = await ctx.stub.getState(plate_number);
-        if (!!vehicleDetails) {
-            throw new Error(`No Vehicle with ID: ${license_plate_num} exists!`);
-        }
-
-
-        const InsuranceDetails = await ctx.stub.getState(policy_number);
-        if (!!InsuranceDetails) {
-            throw new Error(`Insurance with Plicy Number: ${license_plate_num} already exists!`);
-        }
-
         const Insurance = {
             policy_number,
             customer_id,
