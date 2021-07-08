@@ -1,4 +1,4 @@
-  
+
 /*
  * Copyright IBM Corp. All Rights Reserved.
  *
@@ -11,18 +11,12 @@ const { Contract } = require('fabric-contract-api');
 
 class Report extends Contract {
 
-    async claimReport(ctx, policy_number, customer_id, driver_name, accident_details, date, time, injuries, entitled, officer_code, coverage, at_fault, exclusion) {
+    async addReport(ctx, policy_number, customer_id, driver_name, accident_details, date, time, injuries, entitled, officer_code, coverage, at_fault, exclusion, loss) {
         console.info('============= START : Create ledger for Filing a new Report ===========');
 
-
-        const customerDetails = await ctx.stub.getState(customer_id);
-        if (!!customerDetails) {
-            throw new Error(`No Customer with ID: ${customer_id} exists!`);
-        }
-
-        const InsuranceDetails = await ctx.stub.getState(policy_number);
-        if (!!InsuranceDetails) {
-            throw new Error(`Insurance with Policy Number: ${policy_number} already exists!`);
+        const reportDetails = await ctx.stub.getState(policy_number);
+        if (!!reportDetails) {
+            throw new Error(`Report with policy number: ${policy_number} already exists!`);
         }
 
         const Report = {
@@ -44,48 +38,53 @@ class Report extends Contract {
         await ctx.stub.putState(policy_number, Buffer.from(JSON.stringify(Report)));
         console.info('============= END : Create ledger for Storing Insurance Information ===========');
     }
-    async getReports(ctx, policy_number) {
+
+    async getReportInfo(ctx, policy_number) {
         const InsuranceDetails = await ctx.stub.getState(policy_number);
+
         if (!InsuranceDetails || InsuranceDetails.length === 0) {
             throw new Error(`${policy_number} does not exist`);
         }
-        console.log(InsuranceDetails.toString());
+
         return InsuranceDetails.toString();
     }
-    async proofOfLoss(ctx, policy_number, total_loss) {
+
+    async setProofOfLoss(ctx, policy_number, total_loss) {
         const InsuranceDetails = await ctx.stub.getState(policy_number);
+
         if (!InsuranceDetails || InsuranceDetails.length === 0) {
             throw new Error(`${policy_number} does not exist`);
         }
+
         const report = JSON.parse(InsuranceDetails.toString());
         report.loss = total_loss;
-        await ctx.stub.putState(policy_number, Buffer.from(JSON.stringify(report)));    
+
+        await ctx.stub.putState(policy_number, Buffer.from(JSON.stringify(report)));
     }
-    async faultDetermined(ctx, policy_number, at_fault_percent){
+
+    async setFaultDetermined(ctx, policy_number, at_fault_percent) {
         const InsuranceDetails = await ctx.stub.getState(policy_number);
+
         if (!InsuranceDetails || InsuranceDetails.length === 0) {
             throw new Error(`${policy_number} does not exist`);
         }
+
+        if (at_fault_percent > 100 || at_fault_percent < 0) {
+            throw new Error('Wrong fault percentage!');
+        }
+
         const report = JSON.parse(InsuranceDetails.toString());
+
         report.at_fault = at_fault_percent;
-        await ctx.stub.putState(policy_number, Buffer.from(JSON.stringify(report)));    
+
+        //Coverage: this is one proposed calculation
+        const coverage = parseFloat(report.coverage);
+        coverage = coverage - (0.2 * coverage * at_fault_percent / 100);
+        report.coverage = coverage;
+
+        await ctx.stub.putState(policy_number, Buffer.from(JSON.stringify(report)));
     }
-    
-    async faultAssessment(ctx, policy_number){
-        const InsuranceDetails = await ctx.stub.getState(policy_number);
-        if (!InsuranceDetails || InsuranceDetails.length === 0) {
-            throw new Error(`${policy_number} does not exist`);
-        }
-        const report = JSON.parse(InsuranceDetails.toString());
-        if(report.at_fault >== 50){
-            console.info('Your fault in the accident is more than 50 percent.');
-            report.coverage = report.coverage / at_fault;
-        } else {
-            console.info('Your fault in the accident is less than 50 percent.');
-            report.coverage = report.coverage / at_fault;
-        }
-        await ctx.stub.putState(policy_number, Buffer.from(JSON.stringify(report)));  
-    }
+
     async queryAllInsurances(ctx) {
         const startKey = '';
         const endKey = '';

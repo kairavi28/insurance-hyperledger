@@ -33,8 +33,13 @@ class Customer extends Contract {
 
         console.info('============= END : Initialize Customer Ledger ===========');
     }
-    async addCustomerInfo(ctx, customer_id, first_name, last_name, registration_date) {
+    async addCustomer(ctx, customer_id, first_name, last_name, registration_date) {
         console.info('============= START : Create ledger for Storing Customer Information ===========');
+
+        const customerDetails = await ctx.stub.getState(customer_id);
+        if (!!customerDetails) {
+            throw new Error(`Customer with ID: ${customer_id} already exists!`);
+        }
 
         const cust = {
             customer_id,

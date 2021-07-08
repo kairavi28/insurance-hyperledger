@@ -9,9 +9,11 @@
 const Customer = require('./lib/customer');
 const Vehicle = require('./lib/vehicle');
 const Insurance = require('./lib/insurance');
+const Report = require('./lib/report');
 
 module.exports.Customer = Customer;
 module.exports.Vehicle = Vehicle;
 module.exports.Insurance = Insurance;
+module.exports.Report = Report;
 
-module.exports.contracts = [Customer, Vehicle, Insurance];
+module.exports.contracts = [Customer, Vehicle, Insurance, Report];

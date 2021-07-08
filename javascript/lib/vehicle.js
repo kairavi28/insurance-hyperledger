@@ -35,12 +35,12 @@ class Vehicle extends Contract {
 
         console.info('============= END : Initialize Vehicle Ledger ===========');
     }
-    async addVehicleInfo(ctx, customer_id, make, model, year, plate_number) {
+    async addVehicle(ctx, customer_id, make, model, year, plate_number) {
         console.info('============= START : Create ledger for Storing Vehicle Information ===========');
 
         const vehicleDetails = await ctx.stub.getState(plate_number);
         if (!!vehicleDetails) {
-            throw new Error(`${plate_number} already exists!`);
+            throw new Error(`Vehicle Number: "${plate_number}" already exists!`);
         }
 
         const vehicle = {
