@@ -7,10 +7,21 @@
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
+const { ClientIdentity } = require('fabric-shim');
 
 class Vehicle extends Contract {
 
     async initLedger(ctx) {
+
+
+        const cid = new ClientIdentity(ctx.stub);
+
+        const mspID = cid.getMSPID()
+
+        const id = cid.getID();
+
+        return `${mspID} --- ${id}`;
+
         console.info('============= START : Initialize Vehicle Ledger ===========');
         const registered_vehicles = [
             {

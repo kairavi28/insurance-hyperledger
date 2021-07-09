@@ -11,6 +11,7 @@ const { Contract } = require('fabric-contract-api');
 class Customer extends Contract {
 
     async initLedger(ctx) {
+
         console.info('============= START : Initialize Customer Ledger ===========');
         const customer_info = [
             {
@@ -53,19 +54,19 @@ class Customer extends Contract {
     }
 
     async getCustomerInfo(ctx, customer_id) {
-        const custDetails = await ctx.stub.getState(customer_id); 
+        const custDetails = await ctx.stub.getState(customer_id);
         if (!custDetails || custDetails.length === 0) {
             throw new Error(`${customer_id} does not exist`);
         }
         console.log(custDetails.toString());
         return custDetails.toString();
     }
-    
+
     async queryAllCustomers(ctx) {
         const startKey = '';
         const endKey = '';
         const allResults = [];
-        for await (const {key, value} of ctx.stub.getStateByRange(startKey, endKey)) {
+        for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
             const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
